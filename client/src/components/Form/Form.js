@@ -2,13 +2,13 @@ import useStyles from "./styles";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FileBase from "react-file-base64";
 import Button from "@mui/material/Button";
-import { useDispatch } from "react-redux";
-import { createPost } from "../../actions/Posts";
+import { useDispatch, useSelector } from "react-redux";
+import { createPost, updatePost } from "../../actions/Posts";
 
-const Form = () => {
+const Form = ({ currentId, setCurrentId }) => {
   const [postData, setPostData] = useState({
     creator: "",
     title: "",
@@ -16,12 +16,23 @@ const Form = () => {
     tags: "",
     selectedFile: "",
   });
-
+  const post = useSelector((state) =>
+    currentId ? state.posts.find((e) => e._id === currentId) : null
+  );
   const dispatch = useDispatch();
   const classes = useStyles();
+
+  useEffect(() => {
+    if (post) setPostData(post);
+  }, [post]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createPost(postData));
+    if (currentId) {
+      dispatch(updatePost(currentId, postData));
+    } else {
+      dispatch(createPost(postData));
+    }
   };
   const clear = () => {};
   return (
