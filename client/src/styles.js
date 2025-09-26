@@ -1,7 +1,7 @@
-import { makeStyles } from '@mui/styles';
+import { makeStyles } from '@mui/styles'; 
 
-export default makeStyles(()=>({
-    appBar: {
+export default makeStyles((theme)=>({
+  appBar: {
     borderRadius: 15,
     margin: '30px 0',
     display: 'flex',
@@ -15,4 +15,5 @@ export default makeStyles(()=>({
   image: {
     marginLeft: '15px',
   },
+
 }))

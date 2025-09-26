@@ -6,15 +6,19 @@ import reportWebVitals from "./reportWebVitals";
 import reducers from "./reducers"; // Assuming your rootReducer is in a file named reducers.js
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
-import { thunk } from 'redux-thunk';
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { thunk } from "redux-thunk";
 const store = createStore(reducers, compose(applyMiddleware(thunk)));
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+const theme = createTheme();
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <ThemeProvider theme={theme}>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </ThemeProvider>
   </React.StrictMode>
 );
 

@@ -19,7 +19,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getPosts());
-  }, [currentId,dispatch]);
+  }, [currentId, dispatch]);
   return (
     <Container maxWidth="lg">
       <AppBar className={classes.appBar} position="static" color="inherit">
@@ -37,7 +37,14 @@ function App() {
         <Container>
           <Grid
             container
-            sx={{ justifyContent: "space-between", alignItems: "stretch" }}
+            sx={{
+              justifyContent: "space-between",
+              alignItems: "stretch",
+
+              // Définition de la propriété flexDirection avec des breakpoints
+              // Tableau de valeurs : [xs, sm, md, ...]
+              flexDirection: ["column-reverse", "row"],
+            }}
             spacing={3}
           >
             <Grid size={{ xs: 12, sm: 7 }}>

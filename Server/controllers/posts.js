@@ -56,7 +56,6 @@ export const deletePost = async (req, res) => {
     }
 
     await PostMessage.findByIdAndDelete(id); // La correction est ici
-    console.log("DELETE!");
 
     res.json({ message: "Post deleted successfully" });
   } catch (error) {
@@ -64,12 +63,30 @@ export const deletePost = async (req, res) => {
   }
 };
 
-export const likePost=async (req,res)=>{
-  const {id}=req.params;
-  if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No post with that ID');
 
-  const post = await PostMessage.findById(id);
-  const updatedPost=await PostMessage.findByIdAndUpdate(id,{likeCount:post.likeCount+1},{new:true});
+export const likePost = async (req, res) => {
+  const { id } = req.params;
+  
+  // 1. Validation de l'ID
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).send('No post with that ID');
+  }
 
-  res.json(updatePost)
-}
+  try {
+      // 2. Trouver le post
+      const post = await PostMessage.findById(id);
+
+      // 3. Mettre à jour le compteur de likes
+      const updatedPost = await PostMessage.findByIdAndUpdate(
+          id,
+          { likeCount: post.likeCount + 1 }, 
+          { new: true } // {new: true} retourne le document mis à jour
+      );
+
+      // 4. Renvoyer le post mis à jour (CORRECTION ici)
+      res.json(updatedPost); 
+  } catch (error) {
+      // Pour une API robuste, il faut toujours gérer les erreurs de base de données
+      res.status(500).json({ message: error.message });
+  }
+};

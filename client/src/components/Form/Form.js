@@ -30,7 +30,6 @@ const Form = ({ currentId, setCurrentId }) => {
     e.preventDefault();
     if (currentId) {
       dispatch(updatePost(currentId, postData));
-      
     } else {
       dispatch(createPost(postData));
     }
@@ -39,12 +38,12 @@ const Form = ({ currentId, setCurrentId }) => {
   const clear = () => {
     setCurrentId(null);
     setPostData({
-    creator: "",
-    title: "",
-    message: "",
-    tags: "",
-    selectedFile: "",
-  })
+      creator: "",
+      title: "",
+      message: "",
+      tags: "",
+      selectedFile: "",
+    });
   };
   return (
     <Paper>
@@ -94,7 +93,7 @@ const Form = ({ currentId, setCurrentId }) => {
           fullWidth
           value={postData.tags}
           onChange={(e) => {
-            setPostData({ ...postData, tags: e.target.value });
+            setPostData({ ...postData, tags: e.target.value.split(", ") });
           }}
         />
         <div className={classes.fileInput}>
