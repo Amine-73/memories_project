@@ -1,5 +1,8 @@
-import { combineReducers } from "redux";
+import {configureStore} from '@reduxjs/toolkit';
+import Post from './Posts';
 
-import posts from "./Posts";
-
-export default combineReducers({ posts });
+export const store=configureStore({
+    reducer:{
+        posts:Post,
+    }
+})

@@ -1,8 +1,6 @@
-import AppBar from "@mui/material/AppBar";
+
 import "./App.css";
 import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
-import memories from "./images/memories.png";
 import Grow from "@mui/material/Grow";
 import Grid from "@mui/material/Grid";
 import Posts from "./components/Posts/Posts";
@@ -11,6 +9,7 @@ import useStyles from "./styles";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { getPosts } from "./actions/Posts";
+import Navbar from "./components/Navbar/Navbar";
 
 function App() {
   const classes = useStyles();
@@ -22,17 +21,7 @@ function App() {
   }, [currentId, dispatch]);
   return (
     <Container maxWidth="lg">
-      <AppBar className={classes.appBar} position="static" color="inherit">
-        <Typography className={classes.heading} variant="h2" align="center">
-          Memories
-        </Typography>
-        <img
-          src={memories}
-          className={classes.image}
-          alt="memories"
-          height="60"
-        />
-      </AppBar>
+      <Navbar/>
       <Grow in>
         <Container>
           <Grid
