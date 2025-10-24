@@ -1,29 +1,35 @@
 import AppBar from "@mui/material/AppBar";
 import Typography from "@mui/material/Typography";
 import memories from "../../images/memories.png";
-import useStyles from "./styles";
-import {Link} from 'react-router-dom'
+import "./styles.css";
+import { Link } from "react-router-dom";
 import Toolbar from "@mui/material/Toolbar";
-
-const Navbar=()=>{
-    const classes=useStyles();
-    return( <AppBar className={classes.appBar} position="static" color="inherit">
-                <Typography className={classes.heading} variant="h2" align="center">
-                  Memories
-                </Typography>
-                <div className={classes.brandContainer}>
-                    <Typography component={Link} className={classes.heading} variant="h2"></Typography>
-                <img
-                  src={memories}
-                  className={classes.image}
-                  alt="memories"
-                  height="60"
-                />
-                </div>
-                <Toolbar className={classes.Toolbar}>
-
-                </Toolbar>
-                
-              </AppBar>);
-}
-export default Navbar
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+const Navbar = () => {
+  const user=null;
+  return (
+    <AppBar className="appBar" position="static" color="inherit">
+      <div className="brandContainer">
+        <Typography
+          component={Link}
+          className="heading"
+          variant="h2"
+        >Memories</Typography>
+        <img src={memories} className="image" alt="memories" height="60" />
+      </div>
+      <Toolbar className="Toolbar">
+        {user ? (
+          <div className="profile">
+            <Avatar className="purple" alt={user.result.name} src={user.result.imageUrl}>{user.name.charAt(0)}</Avatar>
+            <Typography className="userName" variant="h6">{user.result.name}</Typography>
+            <Button variant='contained' className='logout' color='secondary'>Logout</Button>
+          </div>
+        ):(
+            <Button component={Link} to='/auth'  variant='contained' className='signIn' color='primary'>Sign In</Button>
+        )}
+      </Toolbar>
+    </AppBar>
+  );
+};
+export default Navbar;

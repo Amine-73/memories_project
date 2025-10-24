@@ -1,0 +1,49 @@
+/* Styles pour la barre d'application */
+.appBar {
+    border-radius: 15px;
+    margin: 30px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 50px;
+}
+
+/* Styles pour le titre/logo */
+.heading {
+    color: rgba(0, 183, 255, 1);
+    text-decoration: none;
+}
+
+/* Styles pour l'image (logo ou avatar) */
+.image {
+    margin-left: 15px;
+}
+
+/* Styles pour la barre d'outils (à droite) */
+.toolbar {
+    display: flex;
+    justify-content: flex-end;
+    width: 400px;
+}
+
+/* Styles pour le profil utilisateur (à l'intérieur de la toolbar) */
+.profile {
+    display: flex;
+    justify-content: space-between;
+    width: 400px;
+}
+
+/* Styles pour le nom d'utilisateur */
+.userName {
+    display: flex;
+    align-items: center;
+}
+
+/* Styles pour le conteneur de la marque/logo */
+.brandContainer {
+    display: flex;
+    align-items: center;
+}
+/* Note: Le style 'purple' est omis car il utilise la variable 'theme' de Material-UI. 
+   Il ne peut pas être converti en CSS standard sans connaître la valeur finale. */
