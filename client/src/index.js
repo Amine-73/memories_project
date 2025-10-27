@@ -11,12 +11,17 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 // 🛑 Les lignes pour createStore, applyMiddleware et thunk sont supprimées
 // Elles sont maintenant gérées dans votre fichier 'store.js'
+// 🔑 Import the Provider
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const theme = createTheme();
+const Client_ID =
+  "378924259607-vcksku31730o23r30oj1q8j0gamqm666.apps.googleusercontent.com";
 
 root.render(
   <React.StrictMode>
+    <GoogleOAuthProvider clientId={Client_ID}>
     <ThemeProvider theme={theme}>
       {/* 2. Le Provider utilise le store importé */}
       <BrowserRouter>
@@ -25,6 +30,7 @@ root.render(
       </Provider>
       </BrowserRouter>
     </ThemeProvider>
+    </GoogleOAuthProvider>
   </React.StrictMode>
 );
 

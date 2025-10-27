@@ -13,6 +13,7 @@ const Navbar = () => {
       <div className="brandContainer">
         <Typography
           component={Link}
+          to={'/'}
           className="heading"
           variant="h2"
         >Memories</Typography>

@@ -8,7 +8,13 @@ import "./style.css";
 import Input from "./InputAuth";
 import { Button } from "@mui/material";
 
+import { GoogleLogin } from "@react-oauth/google"; // Import du composant
+import { jwtDecode } from "jwt-decode";
+// And you use it like: const result = jwtDecode(token);
+
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+
 const Auth = () => {
   const [showPsw, setShowPsw] = useState();
   const [isSignup, setIsSignUp] = useState(false);
@@ -16,6 +22,24 @@ const Auth = () => {
   const handleSubmit = () => {};
   const handlChange = () => {};
   const switchMode = () => setIsSignUp((e) => !e);
+  const dispatch = useDispatch();
+
+  //   FUNCTION
+  const googleSuccess = async (res) => {
+    const token = res.credential;
+    const result = jwtDecode(token);
+    try {
+      dispatch({ type: "AUTH", data: { result, token } });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // --- 2. Gestion de l'Échec de Google ---
+  const googleFailure = (error) => {
+    console.log("La connexion Google a échoué. Réessayez plus tard.", error);
+    // Vous pouvez ajouter ici une alerte ou un message d'erreur pour l'utilisateur
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -38,7 +62,7 @@ const Auth = () => {
           style={{ width: "100%", marginTop: "24px" }}
           onSubmit={handleSubmit}
         >
-          <Grid spacing={2}>
+          <Grid container spacing={2}>
             {isSignup && (
               <>
                 <Input
@@ -85,6 +109,14 @@ const Auth = () => {
           >
             {isSignup ? "Sign Up" : "Sign In"}
           </Button>
+          <GoogleLogin
+            onSuccess={googleSuccess}
+            onError={googleFailure}
+            // La prop 'text' est souvent utilisée pour personnaliser le texte du bouton.
+            text={
+              isSignup ? "S'inscrire avec Google" : "Se connecter avec Google"
+            }
+          />
           <Grid>
             <Button
               onClick={switchMode}
