@@ -6,8 +6,30 @@ import { Link } from "react-router-dom";
 import Toolbar from "@mui/material/Toolbar";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+
+
+
 const Navbar = () => {
-  const user=null;
+  const [user,setUser]=useState(JSON.parse(localStorage.getItem('profile')));
+  const dispatch=useDispatch();
+  const navigate=useNavigate()
+  const location=useLocation()
+
+  const Logout=()=>{
+    dispatch({type:'LOGOUT'});
+    navigate("/");
+    setUser(null)
+  }
+  useEffect(()=>  {
+    const token=user?.token
+    setUser(JSON.parse(localStorage.getItem('profile')))
+  },[location])
+
+
   return (
     <AppBar className="appBar" position="static" color="inherit">
       <div className="brandContainer">
@@ -22,9 +44,9 @@ const Navbar = () => {
       <Toolbar className="Toolbar">
         {user ? (
           <div className="profile">
-            <Avatar className="purple" alt={user.result.name} src={user.result.imageUrl}>{user.name.charAt(0)}</Avatar>
+            <Avatar className="purple" alt={user.result.name} src={user.result.imageUrl}>{user?.name?.charAt(0)}</Avatar>
             <Typography className="userName" variant="h6">{user.result.name}</Typography>
-            <Button variant='contained' className='logout' color='secondary'>Logout</Button>
+            <Button variant='contained' className='logout' color='secondary' onClick={Logout}>Logout</Button>
           </div>
         ):(
             <Button component={Link} to='/auth'  variant='contained' className='signIn' color='primary'>Sign In</Button>

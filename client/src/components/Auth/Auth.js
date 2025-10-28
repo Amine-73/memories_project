@@ -7,33 +7,54 @@ import Grid from "@mui/material/Grid";
 import "./style.css";
 import Input from "./InputAuth";
 import { Button } from "@mui/material";
-
+import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google"; // Import du composant
 import { jwtDecode } from "jwt-decode";
 // And you use it like: const result = jwtDecode(token);
-
+import 
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+
+const initialState={firstName:'',lastName:'',email:'',password:'',confirmPassword:''}
+
 
 const Auth = () => {
   const [showPsw, setShowPsw] = useState();
   const [isSignup, setIsSignUp] = useState(false);
-  const handleShowPassword = () => setShowPsw((e) => !e);
-  const handleSubmit = () => {};
-  const handlChange = () => {};
-  const switchMode = () => setIsSignUp((e) => !e);
+  const [formData,setFormData]=useState(initialState)
   const dispatch = useDispatch();
+  const navigate=useNavigate()
+
+
+
 
   //   FUNCTION
+  const switchMode = () => setIsSignUp((e) => !e);
+  const handlChange = (e) => {
+    setFormData({...formData,[e.target.name]:e.target.value})
+  };
+  const handleShowPassword = () => setShowPsw((e) => !e);
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (isSignup) {
+      dispatch(signup(formData,navigate));
+    } else {
+      dispatch(signin(formData,navigate));
+    }
+  };
   const googleSuccess = async (res) => {
     const token = res.credential;
     const result = jwtDecode(token);
     try {
       dispatch({ type: "AUTH", data: { result, token } });
+      navigate('/')
     } catch (error) {
       console.log(error);
     }
   };
+
+
+
 
   // --- 2. Gestion de l'Échec de Google ---
   const googleFailure = (error) => {
@@ -72,8 +93,8 @@ const Auth = () => {
                   autoFocus
                 />
                 <Input
-                  name="firstname"
-                  label="First Name"
+                  name="lastname"
+                  label="last Name"
                   handleChange={handlChange}
                 />
               </>
