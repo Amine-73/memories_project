@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google"; // Import du composant
 import { jwtDecode } from "jwt-decode";
 // And you use it like: const result = jwtDecode(token);
-import 
+
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
@@ -59,7 +59,7 @@ const Auth = () => {
   // --- 2. Gestion de l'Échec de Google ---
   const googleFailure = (error) => {
     console.log("La connexion Google a échoué. Réessayez plus tard.", error);
-    // Vous pouvez ajouter ici une alerte ou un message d'erreur pour l'utilisateur
+    //   Vous pouvez ajouter ici une alerte ou un message d'erreur pour l'utilisateur
   };
 
   return (

@@ -3,7 +3,7 @@ import { AUTH } from '../reducers/Posts'
 
 export const signin=(formData,navigate)=>async(dispatch)=>{
     try {
-        //log in the user
+        //Sign In the user
         navigate('/')
     } catch (error) {
         console.log(error)
@@ -12,7 +12,7 @@ export const signin=(formData,navigate)=>async(dispatch)=>{
 
 export const signup=(formData,navigate)=>async(dispatch)=>{
     try {
-        //log in the user
+        //Sign Up the user
         navigate('/')
     } catch (error) {
         console.log(error)
