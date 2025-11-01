@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google"; // Import du composant
 import { jwtDecode } from "jwt-decode";
 // And you use it like: const result = jwtDecode(token);
-
+import { signup,signin } from "../../actions/Auth";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
