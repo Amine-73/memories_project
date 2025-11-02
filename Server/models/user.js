@@ -7,6 +7,6 @@ const UserShema=mongoose.Schema({
     id:{type:String}
 })
 
-const user=mongoose.model(user,'UserShema')
+const user=mongoose.model('UserShema',UserShema)
 
 export default user;
