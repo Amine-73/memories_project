@@ -7,6 +7,4 @@ const UserShema=mongoose.Schema({
     id:{type:String}
 })
 
-const user=mongoose.model('UserShema',UserShema)
-
-export default user;
+export default mongoose.model('users',UserShema)

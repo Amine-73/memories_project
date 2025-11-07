@@ -12,7 +12,7 @@ export const getPosts = async (req, res) => {
 
 export const createPost = async (req, res) => {
   const post = req.body;
-  const newPost = new PostMessage(post);
+  const newPost = new PostMessage({...post,creator:req.userId,createdAt:new Date.toISOString()});
   try {
     await newPost.save();
     res.status(201).json(newPost);
@@ -32,7 +32,7 @@ export const updatePost = async (req, res) => {
   try {
     const updatedPost = await PostMessage.findByIdAndUpdate(
       _id,
-      { ...post, _id },
+      {...post,_id},
       { new: true }
     );
     res.json(updatedPost);
@@ -52,7 +52,7 @@ export const deletePost = async (req, res) => {
     const postToDelete = await PostMessage.findById(id);
 
     if (!postToDelete) {
-      return res.status(404).json({ message: "Post not found." });
+      return res.status(404).json({ message:"Post not found."});
     }
 
     await PostMessage.findByIdAndDelete(id); // La correction est ici
