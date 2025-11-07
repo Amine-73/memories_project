@@ -10,12 +10,13 @@ import { createPost, updatePost } from "../../actions/Posts";
 
 const Form = ({ currentId, setCurrentId }) => {
   const [postData, setPostData] = useState({
-    creator: "",
     title: "",
     message: "",
     tags: "",
     selectedFile: "",
   });
+  const user=JSON.parse(localStorage.getItem('profile'));
+
   const post = useSelector((state) =>
     currentId ? state.posts.find((e) => e._id === currentId) : null
   );
@@ -29,22 +30,34 @@ const Form = ({ currentId, setCurrentId }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (currentId) {
-      dispatch(updatePost(currentId, postData));
+      dispatch(updatePost({...postData,currentId:currentId,name:user?.result?.name}));
     } else {
-      dispatch(createPost(postData));
+      dispatch(createPost({postData,name:user?.result?.name}));
     }
     clear();
   };
   const clear = () => {
     setCurrentId(null);
     setPostData({
-      creator: "",
       title: "",
       message: "",
       tags: "",
       selectedFile: "",
     });
   };
+
+  if(!user?.result.name){
+    return(
+      <Paper style={{
+        padding:2
+      }}>
+        <Typography>Please Sign In to create your own memories and like other's memories </Typography>
+      </Paper>
+    )
+  }
+
+
+
   return (
     <Paper>
       <form
@@ -56,16 +69,7 @@ const Form = ({ currentId, setCurrentId }) => {
         <Typography variant="h6">
           {currentId ? "Editing" : "Creating"} A Memory
         </Typography>
-        <TextField
-          name="creator"
-          variant="outlined"
-          label="Creator"
-          fullWidth
-          value={postData.creator}
-          onChange={(e) => {
-            setPostData({ ...postData, creator: e.target.value });
-          }}
-        />
+        
         <TextField
           name="title"
           variant="outlined"

@@ -87,37 +87,50 @@ const Auth = () => {
             {isSignup && (
               <>
                 <Input
-                  name="firstname"
+                  name="firstName"
                   label="First Name"
                   handleChange={handlChange}
                   autoFocus
+                  value={formData.firstname}
                 />
                 <Input
-                  name="lastname"
+                  name="lastName"
                   label="last Name"
                   handleChange={handlChange}
+                  value={formData.lastname}
                 />
               </>
             )}
             <Input
-              name="Email"
+              name="email"
               label="Email Address"
               handlChange={handlChange}
               type="email"
+              value={formData.email}
             />
-            <Input
+            {/* <Input
               name="password"
               label="Password"
               handlChange={handlChange}
               type={showPsw ? "text" : "password"}
               handleShowPassword={handleShowPassword}
-            />
+            /> */}
+            <Input
+    name="password"
+    label="Password"
+    handlChange={handlChange} // or rename to handleChange={handleChange}
+    type={showPsw ? "text" : "password"}
+    handleShowPassword={handleShowPassword}
+    // 🔑 AJOUT DE LA PROPRIÉTÉ VALUE
+    value={formData.password}
+/>
             {isSignup && (
               <Input
                 name="confirmPassword"
                 label="Repeat Passoword"
-                handleShowPassword={handlChange}
+                handlChange={handlChange}
                 type="password"
+                value={formData.confirmPassword}
               />
             )}
           </Grid>
