@@ -10,15 +10,45 @@ export const getPosts = async (req, res) => {
   }
 };
 
+// export const createPost = async (req, res) => {
+//   const post = req.body;
+//   const newPost = new PostMessage({...post,creator:req.userId,createdAt:new Date.toISOString()});
+//   try {
+//     await newPost.save();
+//     res.status(201).json(newPost);
+//   } catch (error) {
+//     res.status(409).json({ message: error.message });
+//   }
+// };
+
+
 export const createPost = async (req, res) => {
-  const post = req.body;
-  const newPost = new PostMessage({...post,creator:req.userId,createdAt:new Date.toISOString()});
-  try {
-    await newPost.save();
-    res.status(201).json(newPost);
-  } catch (error) {
-    res.status(409).json({ message: error.message });
-  }
+    // 1. Check for authentication (req.userId is set by your auth middleware)
+    if (!req.userId) {
+        // If the user is not authenticated, stop here.
+        return res.status(401).json({ message: "Unauthenticated: User ID missing." });
+    }
+
+    const post = req.body;
+    
+    // 🔑 CORRECTION: Add parentheses (new Date()).toISOString()
+    const newPost = new PostMessage({
+        ...post,
+        creator: req.userId,
+        createdAt: (new Date()).toISOString()
+    });
+
+    try {
+        await newPost.save();
+        res.status(201).json(newPost);
+    } catch (error) {
+        // Log the specific error on the server for debugging
+        console.error("Post Creation Error:", error.message);
+        
+        // 409 Conflict is typically for uniqueness violations; 400 Bad Request 
+        // is often more appropriate for general validation errors.
+        res.status(400).json({ message: error.message }); 
+    }
 };
 
 export const updatePost = async (req, res) => {
