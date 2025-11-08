@@ -32,7 +32,7 @@ const Form = ({ currentId, setCurrentId }) => {
     if (currentId) {
       dispatch(updatePost({...postData,currentId:currentId,name:user?.result?.name}));
     } else {
-      dispatch(createPost({postData,name:user?.result?.name}));
+      dispatch(createPost({...postData,name:user?.result?.name}));
     }
     clear();
   };
