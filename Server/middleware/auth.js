@@ -1,31 +1,3 @@
-// import jwt from 'jsonwebtoken';
-// const auth=async (req,res,next)=>{
-
-//     try {
-//         if (!req.headers.authorization) {
-//             return next(); // Or send an appropriate 401 Unauthorized response
-//         }
-//         const token=req.headers.authorization.split(" ")[1];
-//         const isCustomAuth=token.length<500
-//         let decodedData;
-
-//         if(token && isCustomAuth){
-//             decodedData=jwt.verify(token,'test');
-//             req.userId=decodedData?.id;
-//         }else{
-//             decodedData=jwt.decode(token);
-//             req.userId=decodedData?.sub;
-//         }
-
-//         next();
-//     } catch (error) {
-//         console.error("Auth Middleware Error:", error);
-//         next()
-//     }
-// }
-
-// export default auth;
-
 import jwt from "jsonwebtoken";
 
 const auth = async (req, res, next) => {
