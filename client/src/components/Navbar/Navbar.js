@@ -10,7 +10,8 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-
+import { jwtDecode } from 'jwt-decode';
+import { useCallback } from "react";
 
 
 const Navbar = () => {
@@ -19,15 +20,42 @@ const Navbar = () => {
   const navigate=useNavigate()
   const location=useLocation()
 
-  const Logout=()=>{
-    dispatch({type:'LOGOUT'});
+
+
+
+  const Logout = useCallback(() => { // 💡 Wrap Logout in useCallback for dependency stability
+    dispatch({ type: 'LOGOUT' });
     navigate("/");
-    setUser(null)
-  }
-  useEffect(()=>  {
-    const token=user?.token
-    setUser(JSON.parse(localStorage.getItem('profile')))
-  },[location])
+    setUser(null);
+}, [dispatch, navigate]); // Dependencies for Logout
+
+useEffect(() => {
+    // 1. Logic to sync state upon navigation or component mount (location change)
+    // This updates the 'user' state, which triggers the second effect (if implemented) 
+    // or the dependency [user?.token]
+    const profile = localStorage.getItem('profile');
+    if (profile) {
+        setUser(JSON.parse(profile));
+    }
+
+// 🔑 Only dependency needed here is location and setUser (as it's used to update state)
+}, [location, setUser]);
+
+
+useEffect(() => {
+    // 2. Logic to check token expiration (runs whenever user?.token changes)
+    const token = user?.token;
+    
+    if (token) {
+        const decodedToken = jwtDecode(token);
+        
+        // If expired, call Logout()
+        if (decodedToken.exp * 1000 < new Date().getTime()) {
+            Logout();
+        }
+    }
+// 🔑 Only dependencies needed here are user?.token and Logout
+}, [user?.token, Logout]);
 
 
   return (
