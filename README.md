@@ -21,6 +21,8 @@ A social media web application that allows users to post, share, and like intere
 * **Responsive UI:** Optimized for all screen sizes using Material UI.
 
 ## 📂 Project Structure
+![Uploading image.png…]()
+
 * `/Client/vite-project`: The React frontend application.
 * `/server`: The Node/Express API and database models.
 
